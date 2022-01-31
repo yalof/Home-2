@@ -1,4 +1,5 @@
-"use strict";
+'use strict';
+
 const form = document.querySelector("#form");
 const todo = document.querySelector("#todo");
 const inputText = document.querySelector("#inputText");

@@ -107,7 +107,7 @@ strong {
 }
 .activeCard {
   background-color: rgba(0, 0, 0, 0.863);
-  text-decoration: line-through;
+
 }
 
 body {
