@@ -1,0 +1,133 @@
+form {
+  width: 30%;
+  padding: 2rem;
+  border: 2px solid rgb(127, 141, 221);
+  margin: 0 auto;
+  background-color: rgb(127, 141, 221);
+  border-radius: 5px 5px 0 0;
+}
+
+input {
+  width: 80%;
+  height: 20px;
+  background-color: mintcream;
+  color: rgba(0, 0, 0, 0.61);
+  border: none;
+  border-bottom: 1px solid rgb(20, 20, 20);
+  border-radius: 5px;
+}
+
+strong {
+  color: rgba(2, 0, 128, 0.555);
+}
+
+#btnSubmit {
+  width: 15%;
+  border-radius: 5px;
+  height: 30px;
+  background-color: mintcream;
+  cursor: pointer;
+  border-color: rgba(0, 0, 0, 0.61);
+}
+
+.btnClearAll {
+  width: 15%;
+  border-radius: 5px;
+  height: 20px;
+  background-color: mintcream;
+  cursor: pointer;
+  border-color: rgba(0, 0, 0, 0.61);
+  margin-left: 180px;
+  margin-top: 15px;
+  color: rgba(2, 0, 128, 0.555);
+}
+
+.btnEdit {
+  position: absolute;
+  width: 45px;
+  border-radius: 5px;
+  height: 20px;
+  background-color: mintcream;
+  cursor: pointer;
+  border-color: rgba(0, 0, 0, 0.61);
+  left: 64rem;
+  top: 100px;
+  color: rgba(2, 0, 128, 0.555);
+}
+
+.btnClose {
+  position: absolute;
+  width: 45px;
+  border-radius: 5px;
+  height: 20px;
+  background-color: mintcream;
+  cursor: pointer;
+  border-color: rgba(0, 0, 0, 0.61);
+  left: 67rem;
+  top: 100px;
+  color: rgba(2, 0, 128, 0.555);
+}
+
+#todo {
+  width: 30%;
+  padding: 2rem;
+  border: 2px solid rgb(194, 203, 255);
+  margin: 0 auto;
+  border-radius: 0 0 5px 5px;
+  background-color: rgb(194, 203, 255);
+}
+
+.card {
+  padding: 0.5rem;
+  border: 2px rgb(127, 141, 221);
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: mintcream;
+  color: rgba(0, 0, 0, 0.582);
+}
+
+.card:hover {
+  background-color: fuchsia, 0.2;
+}
+
+#btnDelete #btnDone {
+  width: 15%;
+  border-radius: 5px;
+  height: 30px;
+  background-color: mintcream;
+  cursor: pointer;
+  border-color: rgba(0, 0, 0, 0.61);
+}
+#btnDone {
+  background-color: rgba(123, 192, 95, 0.521);
+}
+.activeCard {
+  background-color: rgba(0, 0, 0, 0.863);
+  text-decoration: line-through;
+}
+
+body {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-image: url(1.png);
+  background-size: 100%;
+}
+h1 {
+  text-align: center;
+  font-size: 50px;
+  color: rgba(43, 29, 82, 0.699);
+}
+
+.modalClass {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  margin: 0 auto;
+  width: 30%;
+  height: 30%;
+  background-color: rgba(255, 253, 157, 0.534);
+  text-align: center;
+}
