@@ -30,7 +30,7 @@ strong {
   border-color: rgba(0, 0, 0, 0.61);
 }
 
-.btnClearAll {
+#btnClearAll {
   width: 15%;
   border-radius: 5px;
   height: 20px;
@@ -42,7 +42,7 @@ strong {
   color: rgba(2, 0, 128, 0.555);
 }
 
-.btnEdit {
+#btnEdit {
   position: absolute;
   width: 45px;
   border-radius: 5px;
@@ -55,18 +55,26 @@ strong {
   color: rgba(2, 0, 128, 0.555);
 }
 
-.btnClose {
-  position: absolute;
-  width: 45px;
-  border-radius: 5px;
-  height: 20px;
-  background-color: mintcream;
-  cursor: pointer;
-  border-color: rgba(0, 0, 0, 0.61);
-  left: 67rem;
-  top: 100px;
-  color: rgba(2, 0, 128, 0.555);
-}
+#btnClose {
+    float: right;
+    width: 45px;
+    border-radius: 5px;
+    height: 20px;
+    background-color: mintcream;
+    cursor: pointer;
+    border-color: rgba(0, 0, 0, 0.61);
+    left: 64rem;
+    color: rgba(2, 0, 128, 0.555);
+    margin-right: 5px;
+  }
+  
+  #btnClose:hover,
+  #btnClose:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
 
 #todo {
   width: 30%;
@@ -88,7 +96,13 @@ strong {
   align-items: center;
   background-color: mintcream;
   color: rgba(0, 0, 0, 0.582);
+
 }
+.card .activeCard {
+  background-color: black;
+}
+
+
 
 .card:hover {
   background-color: fuchsia, 0.2;
@@ -105,10 +119,7 @@ strong {
 #btnDone {
   background-color: rgba(123, 192, 95, 0.521);
 }
-.activeCard {
-  background-color: rgba(0, 0, 0, 0.863);
 
-}
 
 body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -121,10 +132,10 @@ h1 {
   color: rgba(43, 29, 82, 0.699);
 }
 
-.modalClass {
+.myModal {
   display: none;
   position: fixed;
-  z-index: 2;
+  z-index: 1;
   margin: 0 auto;
   width: 30%;
   height: 30%;

@@ -4,11 +4,10 @@ const form = document.querySelector("#form");
 const todo = document.querySelector("#todo");
 const inputText = document.querySelector("#inputText");
 const btnSubmit = document.querySelector("#btnSubmit");
-const btnClearAll = document.createElement("button");
-const modal = document.createElement("div");
-
-const btnEdit = document.createElement("button");
-const btnClose = document.createElement("button");
+const btnClearAll = document.querySelector("#btnClearAll");
+const myModal = document.querySelector(".myModal");
+const btnEdit = document.querySelector("#btnEdit");
+const btnClose = document.querySelector("btnClose");
 
 let data = [];
 
@@ -39,6 +38,7 @@ btnSubmit.addEventListener("click", (event) => {
 todo.addEventListener("click", (event) => {
   //ниже для проверки чтобы только для кнопки работало
   if (event.target.id === "btnDelete") {
+    const getCard = () => {
     const card = event.target.closest(".card"); //находит род.элемент,ближ. с классом кард
     const cardId = +card.id; //ищем по айди элемент
     data.splice(cardId, 1);
@@ -56,11 +56,12 @@ todo.addEventListener("click", (event) => {
     `;
     });
     console.log(card);
-  }
+    }
   //console.log('TARGET', event.target) ;  //на чем обрабатывает
-
+  }
   //console.log('CURENT_TARGET', event.currentTarget) ; //вешаем событие  на зел блок (id todo)
-});
+  });
+
 
 /// Создаем событие для кнопки Done
 todo.addEventListener("click", (event) => {
@@ -83,41 +84,26 @@ todo.addEventListener("click", (event) => {
   }
 });
 
-// ниже создаем кнопку Clear All
-form.appendChild(btnClearAll);
-btnClearAll.className = "btnClearAll";
-btnClearAll.textContent = "CLEAR";
+// ниже кнопку Clear All;
 
 todo.addEventListener("click", (event) => {
   //ниже для проверки чтобы только для кнопки работало
-  if (event.target.className === "btnClearAll") {
+  if (event.target.id === "btnClearAll") {
     const card = event.target.closest(".card");
     const cardId = +card.id;
     data.splice(cardId);
-
     todo.innerHTML = "";
   }
 });
 
-// создаем кнопку и модальное окно
-form.append(btnEdit);
-btnEdit.className = "btnEdit";
-btnEdit.textContent = "Edit";
-
-form.append(btnClose);
-btnClose.className = "btnClose";
-btnClose.textContent = "Close";
-
-form.append(modal);
-modal.className = "modalClass";
-modal.textContent = "This is a modal window";
-
-//открывается окно при клике
-btnEdit.addEventListener("click", (ev) => {
+//открывается окно при клике на кнопку Edit и закрывается при клике на Close
+form.addEventListener("click", (ev) => {
   ev.preventDefault();
-  modal.style.display = "block";
+  if (ev.target.id ==="btnEdit") {
+    myModal.style.display = "block";
+  } else if (ev.target.id ==="btnClose") {
+    myModal.style.display = "none";
+  }
 });
-// закрытие при клике на кнопку
-btnClose.addEventListener("click", (ev) => {
-  modal.style.display = "none";
-});
+
+
