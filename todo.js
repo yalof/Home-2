@@ -1,109 +1,119 @@
-'use strict';
+"use strict";
 
 const form = document.querySelector("#form");
 const todo = document.querySelector("#todo");
 const inputText = document.querySelector("#inputText");
 const btnSubmit = document.querySelector("#btnSubmit");
 const btnClearAll = document.querySelector("#btnClearAll");
-const myModal = document.querySelector(".myModal");
-const btnEdit = document.querySelector("#btnEdit");
-const btnClose = document.querySelector("btnClose");
+const modal = document.querySelector("#modal");
+const inputmodal = document.querySelector("#inputModal");
+const btnModalSubmit = document.querySelector(".btnModalSubmit");
+const btnExit = document.querySelector(".btnExit");
 
 let data = [];
+
+function getBtn(btn) {
+  btn.innerHTML = ""; //очищение содержимого блока чтобы не дублировались новые задачи по неск раз
+
+  data.forEach((task) => {
+    btn.innerHTML += `                          
+    <div class='${task.done ? "card card_done" : "card"}' id=${task.id}> 
+    ${task.title}
+    <button class='btnDelete'> <strong> Delete </strong> </button>
+    <button class='btnDone'> <strong> Done </strong> </button>
+    <button class='btnEdit'> <strong> Edit </strong> </button>
+    </div>
+    `;
+  });
+}
 
 btnSubmit.addEventListener("click", (event) => {
   event.preventDefault(); //перезагрузка отменяется. отменяет действие браузера по умолчанию
 
-  data.push(inputText.value); // const inputValue был ниже заменен на
-
-  todo.innerHTML = ""; //очищение содержимого блока чтобы не дублировались новые задачи по неск раз
-
-  data.forEach((title, index) => {
-    todo.innerHTML += `                          
-    <div class='card' id=${index}> 
-    ${title} 
-    <div class='btnCard'> <button id='btnDelete'> <strong> Delete </strong> </button>
-    <button id='btnDone'> <strong> Done </strong> </button>
-    </div>
-    </div>
-    `;
+  data.push({
+    title: inputText.value,
+    done: false,
+    id: Date.now(),
   });
 
-  // + чтобы добавлялись значения вниз, а не переписывались заново
+  getBtn(todo);
 
   form.reset(); //очищает инпут
 });
 
-//событие на весь блок повесили ниже
+btnClearAll.addEventListener("click", (event) => {
+  event.preventDefault();
+  data = [];
+  todo.innerHTML = "";
+});
+
 todo.addEventListener("click", (event) => {
   //ниже для проверки чтобы только для кнопки работало
-  if (event.target.id === "btnDelete") {
-    const getCard = () => {
+  if (event.target.classList.contains("btnDelete")) {
     const card = event.target.closest(".card"); //находит род.элемент,ближ. с классом кард
-    const cardId = +card.id; //ищем по айди элемент
-    data.splice(cardId, 1);
+    const cardId = +card.id; //ищем по айди элемент // + чтобы добавлялись значения вниз, а не переписывались заново
+    const cardIndexInData = data.findIndex((task) => task.id === cardId);
+    data.splice(cardIndexInData, 1);
 
-    todo.innerHTML = "";
-
-    data.forEach((title, index) => {
-      todo.innerHTML += `                          
-    <div class='card' id=${index}> 
-    ${title} 
-    <div class='btnCard'> <button id='btnDelete'> <strong> Delete </strong> </button>
-    <button id='btnDone'> <strong> Done </strong> </button>
-    </div>
-    </div>
-    `;
-    });
-    console.log(card);
-    }
-  //console.log('TARGET', event.target) ;  //на чем обрабатывает
+    getBtn(todo);
   }
-  //console.log('CURENT_TARGET', event.currentTarget) ; //вешаем событие  на зел блок (id todo)
+
+  if (event.target.classList.contains("btnDone")) {
+    const card = event.target.closest(".card");
+    const cardId = +card.id;
+    const cardIndexInData = data.findIndex((task) => task.id === cardId);
+    data[cardIndexInData].done = !data[cardIndexInData].done;
+
+    getBtn(todo);
+  }
+
+  if (event.target.classList.contains("btnEdit")) {
+    modal.classList.toggle("visible");
+    let title = card.querySelector(".title");
+    const info = title.textContent;
+    const inputmodal = querySelector("#inputModal");
+    inputmodal.value = info;
+    modal.classList.add("visible"); //для видимого модального окна
+    const cardId = +card.id;
+    const cardIndexInData = data.findIndex((task) => task.id === cardId);
+    const el = data[cardIndexInData];
+  }
+});
+
+const closeModal = () => {
+  btnExit.addEventListener("click", (event) => {
+    modal.classList.remove("visible");
+    getBtn(todo);
   });
+  closeModal();
+};
 
+// const edit = () => {
+//   btnModalSubmit.addEventListener("click", (event) => {
+//     event.preventDefault();
+//     let newTitle = info;
+//     let el = data[cardIndexInData];
+//     el.title = newTitle;
+//     data.splice(cardIndexInData, 1, el);
+//     closeModal();
+//     getBtn();
+//   });
+//   edit(cardIndexInData);
+// };
 
-/// Создаем событие для кнопки Done
-todo.addEventListener("click", (event) => {
-  if (event.target.id === "btnDone") {
-    const card = event.target.closest(".card");
-    const cardId = +card.id;
-    card.classList.add("activeCard");
-
-    todo.innerHTML = "";
-    data.forEach((title, index) => {
-      todo.innerHTML += `                          
-    <div class='card' id=${index}> 
-    ${title} 
-    <div class='btnCard'> <button id='btnDelete'> <strong> Delete </strong> </button>
-    <button id='btnDone'> <strong> Done </strong> </button>
-    </div>
-    </div>
-    `;
-    });
-  }
-});
-
-// ниже кнопку Clear All;
-
-todo.addEventListener("click", (event) => {
-  //ниже для проверки чтобы только для кнопки работало
-  if (event.target.id === "btnClearAll") {
-    const card = event.target.closest(".card");
-    const cardId = +card.id;
-    data.splice(cardId);
-    todo.innerHTML = "";
-  }
-});
-
-//открывается окно при клике на кнопку Edit и закрывается при клике на Close
-form.addEventListener("click", (ev) => {
-  ev.preventDefault();
-  if (ev.target.id ==="btnEdit") {
-    myModal.style.display = "block";
-  } else if (ev.target.id ==="btnClose") {
-    myModal.style.display = "none";
-  }
-});
-
-
+const edit = (event) => {
+  let newTitle = inputModal.value;
+  let title = card.querySelector(".title");
+  const cardIndexInData = data.findIndex((task) => task.id === cardId);
+  let el = data[cardIndexInData];
+  el.title = newTitle;
+  //let el = data[0];
+  data.splice(cardIndexInData, 1, el);
+  console.log(el);
+  console.log(inputModal.value);
+  closeModal();
+  getBtn(todo);
+};
+edit();
+//btnModalSubmit.removeEventListener("click", edit);
+btnModalSubmit.addEventListener("click", edit);

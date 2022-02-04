@@ -15,25 +15,19 @@
         <input type="text" id="inputText" />
         <button type="submit" id="btnSubmit"><strong>+</strong></button>
         <button type="submit" id="btnClearAll"><strong>Clear</strong></button>
-<!-- Триггер/Открыть модальный -->
-<button type="submit" id="btnEdit">Edit</button>
-
-<!-- Модальный -->
-<div class="myModal">
-
-  <!-- Модальное содержание -->
-  <div>
-    <span id="btnClose">Close</span>
-    <p>This is a modal window</p>
-  </div>
-
-</div>
-
       </label>
     </form>
 
     <div id="todo"></div>
+    <div id="modal">
+      <form action="" id="modalForm">
+        <label for="inputModal"> Enter text </label>
+        <input type="text" id="inputModal" />
+        <button type="submit" class="btnModalSubmit">OK</button>
+      </form>
 
-    <script src="todo.js"></script>
+      <button type="submit" class="btnExit">Х</button>
+    </div>
+    <script src="todoNew.js"></script>
   </body>
 </html>
