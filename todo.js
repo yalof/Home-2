@@ -88,8 +88,6 @@ const editTask = (event) => {
   const card = event.target.closest(".card");
   const cardId = +card.id;
   const cardIndexInData = data.findIndex((task) => task.id === cardId);
-  /*const inputModalId = +inputModal.id;
-  const inputIndexInData = data.findIndex((task) => task.id === inputModalId);*/
   const el = data[cardIndexInData];
   data.splice(cardIndexInData, 1, {
     ...el,
