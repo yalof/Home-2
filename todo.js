@@ -6,7 +6,6 @@ const inputText = document.querySelector("#inputText");
 const btnSubmit = document.querySelector("#btnSubmit");
 const btnClearAll = document.querySelector("#btnClearAll");
 const modal = document.querySelector("#modal");
-const inputmodal = document.querySelector("#inputModal");
 const btnModalSubmit = document.querySelector(".btnModalSubmit");
 const btnExit = document.querySelector(".btnExit");
 
@@ -18,7 +17,7 @@ function getBtn(btn) {
   data.forEach((task) => {
     btn.innerHTML += `                          
     <div class='${task.done ? "card card_done" : "card"}' id=${task.id}> 
-    ${task.title}
+    <span class="title">${task.title}</span> 
     <button class='btnDelete'> <strong> Delete </strong> </button>
     <button class='btnDone'> <strong> Done </strong> </button>
     <button class='btnEdit'> <strong> Edit </strong> </button>
@@ -68,52 +67,35 @@ todo.addEventListener("click", (event) => {
   }
 
   if (event.target.classList.contains("btnEdit")) {
-    modal.classList.toggle("visible");
-    let title = card.querySelector(".title");
+    const card = event.target.closest(".card");
+    const title = card.querySelector(".title");
     const info = title.textContent;
-    const inputmodal = querySelector("#inputModal");
-    inputmodal.value = info;
-    modal.classList.add("visible"); //для видимого модального окна
-    const cardId = +card.id;
-    const cardIndexInData = data.findIndex((task) => task.id === cardId);
-    const el = data[cardIndexInData];
+    const inputModal = modal.querySelector("#inputModal");
+    inputModal.value = info;
+    modal.classList.toggle("visible");
   }
 });
-
+/// Создаем событие для выхода из модального окна
 const closeModal = () => {
-  btnExit.addEventListener("click", (event) => {
-    modal.classList.remove("visible");
-    getBtn(todo);
-  });
-  closeModal();
+  modal.classList.remove("visible");
 };
+btnExit.addEventListener("click", closeModal);
 
-// const edit = () => {
-//   btnModalSubmit.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     let newTitle = info;
-//     let el = data[cardIndexInData];
-//     el.title = newTitle;
-//     data.splice(cardIndexInData, 1, el);
-//     closeModal();
-//     getBtn();
-//   });
-//   edit(cardIndexInData);
-// };
-
-const edit = (event) => {
-  let newTitle = inputModal.value;
-  let title = card.querySelector(".title");
+// создаем функцию для редактирования в инпуте модального окна и добавление в список
+const editTask = (event) => {
+  const inputModal = modal.querySelector("#inputModal");
+  inputModal.value = info;
+  const card = event.target.closest(".card");
+  const cardId = +card.id;
   const cardIndexInData = data.findIndex((task) => task.id === cardId);
-  let el = data[cardIndexInData];
-  el.title = newTitle;
-  //let el = data[0];
-  data.splice(cardIndexInData, 1, el);
-  console.log(el);
-  console.log(inputModal.value);
-  closeModal();
+  /*const inputModalId = +inputModal.id;
+  const inputIndexInData = data.findIndex((task) => task.id === inputModalId);*/
+  const el = data[cardIndexInData];
+  data.splice(cardIndexInData, 1, {
+    ...el,
+    title: info,
+  });
   getBtn(todo);
+  closeModal();
 };
-edit();
-//btnModalSubmit.removeEventListener("click", edit);
-btnModalSubmit.addEventListener("click", edit);
+btnModalSubmit.addEventListener("click", editTask);
