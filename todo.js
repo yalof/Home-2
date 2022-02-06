@@ -68,11 +68,11 @@ todo.addEventListener("click", (event) => {
 
   if (event.target.classList.contains("btnEdit")) {
     const card = event.target.closest(".card");
-    const title = card.querySelector(".title");
-    const info = title.textContent;
-    const inputModal = modal.querySelector("#inputModal");
-    inputModal.value = info;
+    const cardId = +card.id; //ищем по айди элемент // + чтобы добавлялись значения вниз, а не переписывались заново
+    const cardIndexInData = data.findIndex((task) => task.id === cardId);
     modal.classList.toggle("visible");
+
+    getBtn(todo);
   }
 });
 /// Создаем событие для выхода из модального окна
@@ -84,6 +84,8 @@ btnExit.addEventListener("click", closeModal);
 // создаем функцию для редактирования в инпуте модального окна и добавление в список
 const editTask = (event) => {
   const inputModal = modal.querySelector("#inputModal");
+  const title = card.querySelector(".title");
+  const info = title.textContent;
   inputModal.value = info;
   const card = event.target.closest(".card");
   const cardId = +card.id;
@@ -96,4 +98,5 @@ const editTask = (event) => {
   getBtn(todo);
   closeModal();
 };
+
 btnModalSubmit.addEventListener("click", editTask);
